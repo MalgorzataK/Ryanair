@@ -1,0 +1,94 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class BookingPayment {
+	WebDriver driver;
+	
+	By bookingPaymentForm = By.cssSelector("form[name='bookingPaymentForm']");
+	
+	By title_dropdown = By.cssSelector("select[id*='title']");
+	By firstName_textbox = By.cssSelector("input[id*='firstName']");
+	By lastName_textbox = By.cssSelector("input[id*='lastName']");
+	
+	By emailAddress_textbox = By.cssSelector("input[id*='emailAddress']");
+	By phoneNumberCountry_dropdown = By.name("phoneNumberCountry");
+	By phoneNumber_textbox = By.cssSelector("input[name='phoneNumber']");		
+	
+	By cardNumber_textbox = By.cssSelector("input[id*='cardNumber']");
+	By cardType_dropdown = By.cssSelector("select[id*='cardType']");
+	By expiryMonth_dropdown = By.cssSelector("select[id*='expiryMonth']");	
+	By expiryYear_dropdown = By.name("expiryYear");
+	By securityCode_textbox = By.name("securityCode");
+	By cardHolderName_textbox = By.name("cardHolderName");
+	
+	By billingAddress1_textbox = By.id("billingAddressAddressLine1");
+	By billingAddressCity_textbox = By.id("billingAddressCity");
+	By billingAddressPostcode_textbox = By.id("billingAddressPostcode");	
+	By billingAddressCountry_dropdown = By.id("billingAddressCountry");
+	
+	By acceptTerms_checkbox = By.cssSelector("input[id*='acceptTerms']");
+	
+	
+	public BookingPayment(WebDriver driver){
+		this.driver = driver;
+	}
+	
+	public void setPassengerDetails(String title, String firstName, String lastName){
+		Select t_dropdown = new Select(driver.findElement(title_dropdown));
+		t_dropdown.selectByVisibleText(title);
+		driver.findElement(firstName_textbox).clear();
+		driver.findElement(firstName_textbox).sendKeys(firstName);
+		driver.findElement(lastName_textbox).clear();
+		driver.findElement(lastName_textbox).sendKeys(lastName);
+	}
+	
+	public void setContactDetails(String email, String country, String phoneNumber){
+		driver.findElement(emailAddress_textbox).clear();
+		driver.findElement(emailAddress_textbox).sendKeys(email);
+		Select c_dropdown = new Select(driver.findElement(phoneNumberCountry_dropdown));
+		c_dropdown.selectByVisibleText(country);		
+		driver.findElement(phoneNumber_textbox).sendKeys(phoneNumber);
+	}
+	
+	
+	public void setPaymentMethod(String cardNumber, int cardType, int expiryMonth, int expiryYear, String securityCode, String cardHolderName){
+		driver.findElement(cardNumber_textbox).clear();
+		driver.findElement(cardNumber_textbox).sendKeys(cardNumber);
+		Select c_dropdown = new Select(driver.findElement(cardType_dropdown));
+		c_dropdown.selectByIndex(cardType);
+		Select m_dropdown = new Select(driver.findElement(expiryMonth_dropdown));
+		m_dropdown.selectByIndex(expiryMonth);
+		Select y_dropdown = new Select(driver.findElement(expiryYear_dropdown));
+		y_dropdown.selectByIndex(expiryYear);
+		driver.findElement(securityCode_textbox).clear();
+		driver.findElement(securityCode_textbox).sendKeys(securityCode);
+		driver.findElement(cardHolderName_textbox).clear();
+		driver.findElement(cardHolderName_textbox).sendKeys(cardHolderName);		
+	}
+	
+	public void setBillingAddress(String billingAddress1, String billingAddressCity, String billingAddressPostcode, String billingAddressCountry){
+		driver.findElement(billingAddress1_textbox).clear();
+		driver.findElement(billingAddress1_textbox).sendKeys(billingAddress1);
+		driver.findElement(billingAddressCity_textbox).clear();
+		driver.findElement(billingAddressCity_textbox).sendKeys(billingAddressCity);
+		driver.findElement(billingAddressPostcode_textbox).clear();
+		driver.findElement(billingAddressPostcode_textbox).sendKeys(billingAddressPostcode);
+		Select c_dropdown = new Select(driver.findElement(billingAddressCountry_dropdown));
+		c_dropdown.selectByVisibleText(billingAddressCountry);
+		
+	}
+	
+	public void acceptTerms(){
+		if (!driver.findElement(acceptTerms_checkbox).isSelected())
+		{
+		     driver.findElement(acceptTerms_checkbox).click();
+		}
+	}
+	
+	public void submitForm(){
+		driver.findElement(bookingPaymentForm).submit();
+	}	
+}

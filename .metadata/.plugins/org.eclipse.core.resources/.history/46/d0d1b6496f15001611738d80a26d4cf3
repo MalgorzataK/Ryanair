@@ -1,0 +1,27 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BookingExtras {
+	WebDriver driver;
+	By closeDialog_icon = By.cssSelector("core-icon[icon-id='glyphs.close']");
+	By checkOut_button = By.cssSelector("button[ng-click='onContinueBtnClick()']");
+	
+	
+	public bookingExtras(WebDriver driver){
+		this.driver = driver;
+	}
+	
+	public void closeDialog(){		
+		driver.findElement(closeDialog_icon).click();
+	}	
+	
+	public void clickCheckOutButton(){
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(checkOut_button));
+		driver.findElement(checkOut_button).click();
+	}
+}
