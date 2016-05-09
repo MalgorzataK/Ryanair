@@ -51,7 +51,6 @@ public class BookingUpToADeclinedPayment {
 		bookingPayment.acceptTerms();
 		bookingPayment.submitForm();
 		
-		Assert.assertEquals(bookingPayment.getTextMessage(),"Oh. There was a problem "
-				+ "As your payment was not authorised we could not complete your reservation. Please ensure that the information was correct or use a new payment to try again");
+		Assert.assertTrue(bookingPayment.getTextMessage().contains("As your payment was not authorised we could not complete your reservation. Please ensure that the information was correct or use a new payment to try again"));		
 	}
 }
